@@ -933,7 +933,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
 
 window.document.addEventListener('DOMContentLoaded', function () {
-  var slider = new _modules_slider__WEBPACK_IMPORTED_MODULE_0__["default"]('.page', '.next');
+  var slider = new _modules_slider__WEBPACK_IMPORTED_MODULE_0__["default"]('.page', '.next', '.hanson');
   slider.render();
 });
 
@@ -968,50 +968,69 @@ function () {
     this.page = document.querySelector(page);
     this.slides = this.page.children;
     this.btns = document.querySelectorAll(btns);
-    this.pageIndex = 1;
+    this.slideIndex = 1;
   }
 
   _createClass(Slider, [{
     key: "showSlides",
     value: function showSlides(n) {
-      if (n > this.slides.length) {
-        this.pageIndex = 1;
-      }
+      var _this = this;
 
-      ;
+      if (n > this.slides.length) {
+        this.slideIndex = 1;
+      }
 
       if (n < 1) {
-        this.pageIndex = this.slides.length;
+        this.slideIndex = this.slides.length;
       }
+
+      try {
+        this.hanson.style.opacity = '0';
+
+        if (n == 3) {
+          this.hanson.classList.add('animated');
+          this.hanson.style.zIndex = '100';
+          setTimeout(function () {
+            _this.hanson.style.opacity = '1';
+
+            _this.hanson.classList.add('slideInUp');
+          }, 3000);
+        } else {
+          this.hanson.classList.remove('slideInUp');
+        }
+      } catch (e) {}
 
       this.slides.forEach(function (slide) {
         slide.style.display = 'none';
       });
-      this.slides[this.pageIndex - 1].style.display = 'block';
+      this.slides[this.slideIndex - 1].style.display = 'block';
     }
   }, {
-    key: "plusSlide",
-    value: function plusSlide(n) {
-      this.showSlides(this.pageIndex += n);
+    key: "plusSlides",
+    value: function plusSlides(n) {
+      this.showSlides(this.slideIndex += n);
     }
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
-      this.btns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          _this.plusSlide(1);
+      try {
+        this.hanson = document.querySelector('.hanson');
+      } catch (e) {}
+
+      this.btns.forEach(function (item) {
+        item.addEventListener('click', function () {
+          _this2.plusSlides(1);
         });
-        btn.parentNode.previousElementSibling.addEventListener('click', function (e) {
-          e.preventDefault;
-          _this.pageIndex = 1;
+        item.parentNode.previousElementSibling.addEventListener('click', function (e) {
+          e.preventDefault();
+          _this2.slideIndex = 1;
 
-          _this.showSlides(_this.pageIndex);
+          _this2.showSlides(_this2.slideIndex);
         });
-
-        _this.showSlides(_this.pageIndex);
       });
+      this.showSlides(this.slideIndex);
     }
   }]);
 
