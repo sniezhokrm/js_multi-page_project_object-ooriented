@@ -27,20 +27,23 @@ export default class MainSlider extends Slider {
           } else {
               this.hanson.classList.remove('slideInUp');
           }
+          this.slides.forEach(slide => {
+              slide.style.display = 'none';
+          })
+
+          this.slides[this.slideIndex - 1].style.display = 'block';
+
       }catch(e){}
+}
 
-      this.slides.forEach(slide => {
-          slide.style.display = 'none';
-      });
-
-      this.slides[this.slideIndex - 1].style.display = 'block';
-  }
 
   plusSlides(n) {
       this.showSlides(this.slideIndex += n);
   }
 
   render() {
+    if (this.container) {
+
       try {
           this.hanson = document.querySelector('.hanson');
       } catch(e){}
@@ -59,4 +62,5 @@ export default class MainSlider extends Slider {
 
       this.showSlides(this.slideIndex);
   }
+}
 };

@@ -21,6 +21,10 @@
     "browser-sync": "^2.26.7",
     "core-js": "^3.4.2",
     "gulp": "^4.0.2",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-sass": "^5.0.0",
+    "minifycss": "^1.0.1",
+    "sass": "^1.44.0",
     "webpack": "^4.41.2",
     "webpack-stream": "^5.2.1"
   }
