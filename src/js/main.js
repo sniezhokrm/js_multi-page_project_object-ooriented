@@ -30,6 +30,14 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   showUpSlider.init();
 
+  const showUpSecondPageSlider = new MainSlider({
+    container: '.moduleapp',
+    prev: '.prevmodule',
+    next: '.nextmodule'
+  });
+  showUpSecondPageSlider.render();
+
+
   const modulesSlider = new MiniSlider({
     container: '.modules__content-slider',
     prev: '.modules__info-btns .slick-prev',
