@@ -86,7 +86,7 @@ export default class MiniSlider extends Slider {
       this.container.addEventListener('mouseover', () => {
         clearInterval(autoSlide);
       });
-      
+
       this.container.addEventListener('mouseout', () => {
         autoSlide = setInterval(() => this.nextSlide(), 2000);
       });
@@ -107,13 +107,14 @@ export default class MiniSlider extends Slider {
       this.bindTriggers();
       this.decorizeSlides();
       this.autoPlaySlide();
+      for (let i = 0; i < this.slides.length; i++) { //check for btn in slider
+        if (this.slides[i].tagName === "BUTTON") {
+          this.numBtn++;
+        }
+      }
     } catch (e) {};
 
-    for (let i = 0; i < this.slides.length; i++) { //check for btn in slider
-      if (this.slides[i].tagName === "BUTTON") {
-        this.numBtn++;
-      }
-    }
+
 
   };
 };
