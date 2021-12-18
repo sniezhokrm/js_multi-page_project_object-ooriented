@@ -100,6 +100,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_sliders_miniSlider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/sliders/miniSlider */ "./src/js/modules/sliders/miniSlider.js");
 /* harmony import */ var _modules_difference__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/difference */ "./src/js/modules/difference.js");
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
+/* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+/* harmony import */ var _modules_download__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/download */ "./src/js/modules/download.js");
+
+
 
 
 
@@ -117,7 +121,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   sliderPage.render();
   new _modules_playVideo__WEBPACK_IMPORTED_MODULE_1__["default"]('.showup .play', '.overlay').init();
-  new _modules_playVideo__WEBPACK_IMPORTED_MODULE_1__["default"]('.module__video-item .play', '.overlay').init(); //  new VideoPlayer('.video .play', '.overlay').init();
+  new _modules_playVideo__WEBPACK_IMPORTED_MODULE_1__["default"]('.module__video-item .play', '.overlay').init(); //  new VideoPlayer('.video .play', '.overlay').init(); not work, mistake with player.stop();
 
   const showUpSlider = new _modules_sliders_miniSlider__WEBPACK_IMPORTED_MODULE_2__["default"]({
     container: '.showup__content-slider',
@@ -129,8 +133,8 @@ window.addEventListener('DOMContentLoaded', () => {
   showUpSlider.init();
   const showUpSecondPageSlider = new _modules_sliders_mainSlider__WEBPACK_IMPORTED_MODULE_0__["default"]({
     container: '.moduleapp',
-    prev: '.prevmodule',
-    next: '.nextmodule'
+    prev: '.module__info-controls .prev',
+    next: '.module__info-controls .next'
   });
   showUpSecondPageSlider.render();
   const modulesSlider = new _modules_sliders_miniSlider__WEBPACK_IMPORTED_MODULE_2__["default"]({
@@ -151,7 +155,73 @@ window.addEventListener('DOMContentLoaded', () => {
   feedSlider.init();
   new _modules_difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officernew', '.officerold', '.officer__card-item').init();
   new _modules_forms__WEBPACK_IMPORTED_MODULE_4__["default"]('.form').init();
+  new _modules_accordion__WEBPACK_IMPORTED_MODULE_5__["default"]('.plus__content', '.msg').init();
+  new _modules_download__WEBPACK_IMPORTED_MODULE_6__["default"]('.download').init();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/accordion.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/accordion.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Accordion; });
+class Accordion {
+  constructor(btn, elem) {
+    this.btn = document.querySelectorAll(btn);
+    this.elem = document.querySelectorAll(elem);
+    this.newImg = document.createElement("img");
+  }
+
+  hideElem() {
+    this.elem.forEach(elem => {
+      elem.style.display = "none";
+      elem.classList.add("animated");
+    });
+  }
+
+  triggersBtn() {
+    this.btn.forEach((btn, i) => {
+      btn.addEventListener('click', () => {
+        if (!btn.querySelector('.img-minus')) {
+          this.newImg.style.display = "none";
+          this.newImg.style.width = "100%";
+          this.newImg.setAttribute("SRC", './assets/icons/minus.png');
+          this.newImg.classList.add('img-minus');
+          btn.appendChild(this.newImg);
+        }
+
+        ;
+        this.elem[i].classList.remove("fadeIn", "fadeOut");
+
+        if (window.getComputedStyle(this.elem[i]).display === "none") {
+          this.elem[i].style.display = "block";
+          btn.querySelector('SVG').style.display = "none";
+          this.newImg.style.display = "block";
+          this.elem[i].classList.add("fadeIn");
+        } else {
+          this.elem[i].classList.add("fadeOut");
+          this.elem[i].style.display = "none";
+          btn.querySelector('SVG').style.display = "block";
+          this.newImg.style.display = "none";
+        }
+      });
+    });
+  }
+
+  init() {
+    if (this.elem.length > 0) {
+      this.hideElem();
+      this.triggersBtn();
+    }
+  }
+
+}
 
 /***/ }),
 
@@ -212,6 +282,60 @@ class Difference {
 
 }
 ;
+
+/***/ }),
+
+/***/ "./src/js/modules/download.js":
+/*!************************************!*\
+  !*** ./src/js/modules/download.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Download; });
+class Download {
+  constructor(btn) {
+    this.btn = document.querySelectorAll(btn);
+    this.path = {
+      path1: './assets/img/1.jpg',
+      path2: './assets/img/2.jpg',
+      path3: './assets/img/3.jpg',
+      path4: './assets/img/4.jpg',
+      path5: './assets/img/5.jpg',
+      path6: './assets/img/6.jpg',
+      path7: './assets/img/7.jpg',
+      path8: './assets/img/8.jpg'
+    };
+  }
+
+  download(path, i) {
+    const hr = document.createElement("A");
+    document.body.appendChild(hr);
+    hr.setAttribute("href", path);
+    hr.setAttribute("download", "nice-picture" + (1 + i));
+    hr.style.display = 'none';
+    hr.click();
+    hr.remove();
+  }
+
+  trigers() {
+    this.btn.forEach((btn, i) => {
+      btn.addEventListener('click', e => {
+        const path = "./assets/img/" + (i + 1) + ".jpg";
+        e.stopPropagation(); //stop events on another elements of the page
+
+        this.download(path, i);
+      });
+    });
+  }
+
+  init() {
+    this.trigers();
+  }
+
+}
 
 /***/ }),
 

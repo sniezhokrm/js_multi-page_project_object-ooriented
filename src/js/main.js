@@ -3,6 +3,8 @@ import VideoPlayer from './modules/playVideo';
 import MiniSlider from './modules/sliders/miniSlider';
 import Difference from './modules/difference';
 import Forms from './modules/forms';
+import Accordion from './modules/accordion';
+import Download from './modules/download';
 
 window.addEventListener('DOMContentLoaded', () => {
   const slider = new MainSlider({
@@ -20,7 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   new VideoPlayer('.showup .play', '.overlay').init();
   new VideoPlayer('.module__video-item .play', '.overlay').init();
-//  new VideoPlayer('.video .play', '.overlay').init();
+//  new VideoPlayer('.video .play', '.overlay').init(); not work, mistake with player.stop();
 
   const showUpSlider = new MiniSlider({
     container: '.showup__content-slider',
@@ -33,8 +35,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const showUpSecondPageSlider = new MainSlider({
     container: '.moduleapp',
-    prev: '.prevmodule',
-    next: '.nextmodule'
+    prev: '.module__info-controls .prev',
+    next: '.module__info-controls .next'
   });
   showUpSecondPageSlider.render();
 
@@ -60,5 +62,9 @@ window.addEventListener('DOMContentLoaded', () => {
   new Difference('.officernew', '.officerold', '.officer__card-item').init();
 
   new Forms('.form').init();
+
+  new Accordion('.plus__content', '.msg').init();
+
+  new Download('.download').init();
 
 });
