@@ -5,8 +5,13 @@ import Difference from './modules/difference';
 import Forms from './modules/forms';
 import Accordion from './modules/accordion';
 import Download from './modules/download';
+import Customizator from './modules/customizator';
 
 window.addEventListener('DOMContentLoaded', () => {
+
+  const panel = new Customizator();
+  panel.render();
+
   const slider = new MainSlider({
     container: '.page',
     btns: '.next'

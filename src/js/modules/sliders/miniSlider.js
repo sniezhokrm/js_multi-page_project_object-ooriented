@@ -107,7 +107,7 @@ export default class MiniSlider extends Slider {
       this.bindTriggers();
       this.decorizeSlides();
       this.autoPlaySlide();
-      for (let i = 0; i < this.slides.length; i++) { //check for btn in slider
+      for (let i = 0; i < this.slides.length; i++) { //check for btn(not sliders) in slider
         if (this.slides[i].tagName === "BUTTON") {
           this.numBtn++;
         }
